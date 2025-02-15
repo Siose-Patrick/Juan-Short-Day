@@ -1,0 +1,72 @@
+[gd_scene load_steps=12 format=3 uid="uid://dr56n5objiwxu"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_7t8mg"]
+[ext_resource type="Texture2D" uid="uid://cc33u2qhng7u6" path="res://Juan_Idle/idle_0000.png" id="2_cykfd"]
+[ext_resource type="Script" path="res://camera_script.gd" id="3_5gpeh"]
+[ext_resource type="Texture2D" uid="uid://bfam0c8p4gw34" path="res://Juan_Idle/idle_0001.png" id="3_dvpr5"]
+[ext_resource type="Texture2D" uid="uid://yiv1r08b00wq" path="res://Juan_Idle/idle_0002.png" id="4_30ko0"]
+[ext_resource type="Texture2D" uid="uid://cjpck4e0afguk" path="res://Juan_Idle/idle_0003.png" id="5_3tqef"]
+[ext_resource type="Texture2D" uid="uid://dk5jpq2e776nv" path="res://Juan_Idle/idle_0004.png" id="6_ouprw"]
+[ext_resource type="Texture2D" uid="uid://wib43hi04upo" path="res://Juan_Idle/idle_0005.png" id="7_qh4qu"]
+[ext_resource type="Texture2D" uid="uid://bmuq2fpoyksj6" path="res://Juan_Idle/idle_0006.png" id="8_vuwfi"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l3u5m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cykfd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_dvpr5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_30ko0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_3tqef")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ouprw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_qh4qu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_vuwfi")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 12.0
+}]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2ctts"]
+radius = 0.251982
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_7t8mg")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Pivot"]
+billboard = 2
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_l3u5m")
+animation = &"idle"
+
+[node name="Sprite3D" type="Sprite3D" parent="Pivot"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00272959, 0)
+shape = SubResource("SphereShape3D_2ctts")
+
+[node name="Camera_Pivot" type="Node3D" parent="." node_paths=PackedStringArray("player")]
+top_level = true
+script = ExtResource("3_5gpeh")
+player = NodePath("..")
+
+[node name="Camera_Target" type="Node3D" parent="Camera_Pivot"]
+transform = Transform3D(1, 0, 0, 0, 0.946576, 0.32248, 0, -0.32248, 0.946576, 0, 0.379579, 0.98825)
+
+[node name="Camera3D" type="Camera3D" parent="Camera_Pivot/Camera_Target"]
+current = true
+fov = 87.1875
